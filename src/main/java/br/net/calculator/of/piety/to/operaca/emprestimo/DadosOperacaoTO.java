@@ -1,12 +1,13 @@
 package br.net.calculator.of.piety.to.operaca.emprestimo;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import br.net.calculator.of.piety.to.TO;
 
-public class DadosOperacao implements TO {
+public class DadosOperacaoTO implements TO {
 
 	/**
 	 * 
@@ -17,17 +18,29 @@ public class DadosOperacao implements TO {
 	private double valorLiquido;
 	private double valorOperacoesLiquidadas;
 	private LocalDate dataLiberacao;
-	private Taxa taxaFixa;
-	private Integer numeroParcelas; 
-	private List<ParcelaOperacao> parcelasOperacao;
-	private List<Despesa> despesasOperacao;
+	private TaxaTO taxaFixa;
+	private BigDecimal cetOperacao;
+	private List<ParcelaOperacaoTO> parcelasOperacao;
+	private List<DespesaTO> despesasOperacao;
 	
 
 	
-	public List<Despesa> getDespesasOperacao() {
+	public BigDecimal getCetOperacao() {
+		return cetOperacao;
+	}
+	public void setCetOperacao(BigDecimal cetOperacao) {
+		this.cetOperacao = cetOperacao;
+	}
+	public List<DespesaTO> getDespesasOperacao() {
+		if (despesasOperacao == null) {
+			despesasOperacao = new ArrayList<DespesaTO>();
+			
+		}
+
+		
 		return despesasOperacao;
 	}
-	public void setDespesasOperacao(List<Despesa> despesasOperacao) {
+	public void setDespesasOperacao(List<DespesaTO> despesasOperacao) {
 		this.despesasOperacao = despesasOperacao;
 	}
 	public double getValorLiquido() {
@@ -42,19 +55,14 @@ public class DadosOperacao implements TO {
 	public void setValorOperacoesLiquidadas(double valorOperacoesLiquidadas) {
 		this.valorOperacoesLiquidadas = valorOperacoesLiquidadas;
 	}
-	public Integer getNumeroParcelas() {
-		return numeroParcelas;
-	}
-	public void setNumeroParcelas(Integer numeroParcelas) {
-		this.numeroParcelas = numeroParcelas;
-	}
-	public List<ParcelaOperacao> getParcelasOperacao() {
+
+	public List<ParcelaOperacaoTO> getParcelasOperacao() {
 		if (parcelasOperacao == null) {
-			parcelasOperacao = new ArrayList<ParcelaOperacao>();
+			parcelasOperacao = new ArrayList<ParcelaOperacaoTO>();
 		}
 		return parcelasOperacao;
 	}
-	public void setParcelasOperacao(List<ParcelaOperacao> parcelasOperacao) {
+	public void setParcelasOperacao(List<ParcelaOperacaoTO> parcelasOperacao) {
 		this.parcelasOperacao = parcelasOperacao;
 	}
 	public double getValorBruto() {
@@ -69,10 +77,10 @@ public class DadosOperacao implements TO {
 	public void setDataLiberacao(LocalDate dataLiberacao) {
 		this.dataLiberacao = dataLiberacao;
 	}
-	public Taxa getTaxaFixa() {
+	public TaxaTO getTaxaFixa() {
 		return taxaFixa;
 	}
-	public void setTaxaFixa(Taxa taxaFixa) {
+	public void setTaxaFixa(TaxaTO taxaFixa) {
 		this.taxaFixa = taxaFixa;
 	}
 

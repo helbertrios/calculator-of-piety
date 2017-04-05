@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import br.net.calculator.of.piety.to.TO;
 
-public class Despesa implements TO {
+public class DespesaTO implements TO {
 	
 	/**
 	 * 
@@ -13,7 +13,7 @@ public class Despesa implements TO {
 	private BigDecimal valorDespesa;
 	private String nomeDespesa;
 	private String id;
-	private Taxa taxa;
+	private TaxaTO taxa;
 	
 	public BigDecimal getValorDespesa() {
 		return valorDespesa;
@@ -33,10 +33,10 @@ public class Despesa implements TO {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public Taxa getTaxa() {
+	public TaxaTO getTaxa() {
 		return taxa;
 	}
-	public void setTaxa(Taxa taxa) {
+	public void setTaxa(TaxaTO taxa) {
 		this.taxa = taxa;
 	}
 	

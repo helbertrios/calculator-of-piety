@@ -6,8 +6,8 @@ import java.time.Month;
 
 import org.junit.Test;
 
-import br.net.calculator.of.piety.to.operaca.emprestimo.DadosOperacao;
-import br.net.calculator.of.piety.to.operaca.emprestimo.Taxa;
+import br.net.calculator.of.piety.to.operaca.emprestimo.DadosOperacaoTO;
+import br.net.calculator.of.piety.to.operaca.emprestimo.TaxaTO;
 
 public class TestCalculoOperacaoEmprestimo {
 

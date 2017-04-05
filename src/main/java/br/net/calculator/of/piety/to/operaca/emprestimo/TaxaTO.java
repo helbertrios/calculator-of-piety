@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import br.net.calculator.of.piety.to.TO;
 
-public class Taxa implements TO {
+public class TaxaTO implements TO {
 
 	/**
 	 * 
