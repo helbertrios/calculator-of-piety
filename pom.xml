@@ -4,7 +4,7 @@
 	
 	<groupId>br.net.calculator.of.piety</groupId>
 	<artifactId>calculator-of-piety</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<packaging>jar</packaging>
 
 	<name>Calculator of piety</name>
@@ -17,17 +17,14 @@
 
 		<powermock.version>1.6.5</powermock.version>
 	</properties>
-
-	<distributionManagement>
-		<repository>
-			<id>releases</id>
-			<url>?????</url>
-		</repository>
-		<snapshotRepository>
-			<id>snapshots</id>
-			<url>????</url>
-		</snapshotRepository>
-	</distributionManagement>
+	
+		
+		<repositories>
+			<repository>
+		    	<id>jitpack.io</id>
+		    	<url>https://jitpack.io</url>
+			</repository>
+		</repositories>
 
 	<dependencyManagement>
 		<dependencies>
