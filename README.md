@@ -1,0 +1,1 @@
+[![](https://jitpack.io/v/helbertrios/calculator-of-piety.svg)](https://jitpack.io/#helbertrios/calculator-of-piety)
