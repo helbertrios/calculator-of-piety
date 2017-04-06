@@ -6,14 +6,14 @@ import java.util.List;
 
 import br.net.calculator.of.piety.to.TO;
 
-public class DadosEmprestimoCET implements TO {
+public class DadosEmprestimoCETTO implements TO {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 4556084475920566701L;
 
-	private List<ParcelaCET> parcelasCet;
+	private List<ParcelaCETTO> parcelasCet;
 	private LocalDate dataLiberacao;
 	private double valorDaOperacaoParaCET;
 
@@ -21,11 +21,11 @@ public class DadosEmprestimoCET implements TO {
 	
 
 
-	public List<ParcelaCET> getParcelasCet() {
+	public List<ParcelaCETTO> getParcelasCet() {
 		return parcelasCet;
 	}
 
-	public void setParcelasCet(List<ParcelaCET> parcelasCet) {
+	public void setParcelasCet(List<ParcelaCETTO> parcelasCet) {
 		this.parcelasCet = parcelasCet;
 	}
 

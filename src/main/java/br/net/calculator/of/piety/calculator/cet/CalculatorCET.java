@@ -5,7 +5,7 @@ import java.math.MathContext;
 
 import br.net.calculator.of.piety.data.UtilData;
 import br.net.calculator.of.piety.math.bigdecimal.util.BigFunctions;
-import br.net.calculator.of.piety.to.cet.DadosEmprestimoCET;
+import br.net.calculator.of.piety.to.cet.DadosEmprestimoCETTO;
 
 
 public class CalculatorCET {
@@ -22,7 +22,7 @@ public class CalculatorCET {
      * @param dadosEmprestimoCET Dados Necessarios para calculo do CET 
      * @return Retorna o CET anual da Operação
      */
-	private static BigDecimal fcetOperacao(BigDecimal cet, DadosEmprestimoCET dadosEmprestimoCET) {
+	private static BigDecimal fcetOperacao(BigDecimal cet, DadosEmprestimoCETTO dadosEmprestimoCET) {
 
 		BigDecimal fCet = new BigDecimal(0.0d);
 		int index = 0;
@@ -63,7 +63,7 @@ public class CalculatorCET {
 	 * @param dadosEmprestimoCET
 	 * @return
 	 */
-	public static BigDecimal cetOperacao(DadosEmprestimoCET dadosEmprestimoCET) {
+	public static BigDecimal cetOperacao(DadosEmprestimoCETTO dadosEmprestimoCET) {
 
 		BigDecimal intervalo = new BigDecimal("1.00");
 

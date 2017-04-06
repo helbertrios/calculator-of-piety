@@ -2,9 +2,9 @@ package br.net.calculator.of.piety.to.cet;
 
 import java.math.BigDecimal;
 
-import br.net.calculator.of.piety.to.operaca.emprestimo.CalendarioParcela;
+import br.net.calculator.of.piety.to.operaca.emprestimo.CalendarioParcelaTO;
 
-public class ParcelaCET extends CalendarioParcela{
+public class ParcelaCETTO extends CalendarioParcelaTO{
 
 	/**
 	 * 

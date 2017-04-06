@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import br.net.calculator.of.piety.to.TO;
 
-public abstract class CalendarioParcela implements TO {
+public abstract class CalendarioParcelaTO implements TO {
 
 
 	/**
