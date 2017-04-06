@@ -4,7 +4,7 @@
 	
 	<groupId>br.net.calculator.of.piety</groupId>
 	<artifactId>calculator-of-piety</artifactId>
-	<version>1.0</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>Calculator of piety</name>
@@ -18,13 +18,24 @@
 		<powermock.version>1.6.5</powermock.version>
 	</properties>
 	
+	<distributionManagement>
+		<repository>
+			<id>nexus-calculator-of-piety-releases</id>
+			<url>http://nexus-helbertrios.rhcloud.com/repository/maven-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>nexus-calculator-of-piety-snapshots</id>
+			<url>http://nexus-helbertrios.rhcloud.com/repository/maven-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
+	<repositories>
+		<repository>
+			<id>nexus-calculator-of-piety-public</id>
+			<url>http://nexus-helbertrios.rhcloud.com/repository/maven-public/</url>
+		</repository>
+	</repositories>
 		
-		<repositories>
-			<repository>
-		    	<id>jitpack.io</id>
-		    	<url>https://jitpack.io</url>
-			</repository>
-		</repositories>
 
 	<dependencyManagement>
 		<dependencies>
