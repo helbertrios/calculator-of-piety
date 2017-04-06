@@ -20,19 +20,20 @@
 	
 	<distributionManagement>
 		<repository>
-			<id>nexus-calculator-of-piety-releases</id>
-			<url>http://nexus-helbertrios.rhcloud.com/repository/maven-releases/</url>
+			<id>jitpack.io</id>
+			 <url>https://jitpack.io</url>
 		</repository>
 		<snapshotRepository>
-			<id>nexus-calculator-of-piety-snapshots</id>
-			<url>http://nexus-helbertrios.rhcloud.com/repository/maven-snapshots/</url>
+			 <id>jitpack.io</id>
+		    <url>https://jitpack.io</url>
 		</snapshotRepository>
 	</distributionManagement>
+
 	
 	<repositories>
 		<repository>
-			<id>nexus-calculator-of-piety-public</id>
-			<url>http://nexus-helbertrios.rhcloud.com/repository/maven-public/</url>
+		    <id>jitpack.io</id>
+		    <url>https://jitpack.io</url>
 		</repository>
 	</repositories>
 		
