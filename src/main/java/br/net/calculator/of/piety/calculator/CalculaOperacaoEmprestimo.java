@@ -22,20 +22,26 @@ public class CalculaOperacaoEmprestimo {
 		LocalDate dataLiberacao = LocalDate.of(2017, Month.APRIL, 05);
 		Integer numeroParcela = 24;
 		double valorBruto = 10000.00;
+		
 		TaxaTO taxaFixa = getTaxa();
 
 		DadosOperacaoTO dadosOperacao = new DadosOperacaoTO();
+		
 		dadosOperacao.setDataLiberacao(dataLiberacao);
 		dadosOperacao.setTaxaFixa(taxaFixa);
 		dadosOperacao.setValorBruto(valorBruto);
+		
 		dadosOperacao.setParcelasOperacao(gerarParcelaOperacao(numeroParcela));
 		
-		calculaValorParcelasPrice(dadosOperacao);
 		calculaOperacoesAnteriores(dadosOperacao);
+		
+		calculaValorParcelasPrice(dadosOperacao);
+		
 		calculaValorLiquido(dadosOperacao);
 
 		BigDecimal cet = apuraCet(dadosOperacao.getValorLiquido(), dadosOperacao.getDataLiberacao(),
 				dadosOperacao.getParcelasOperacao());
+		
 		dadosOperacao.setCetOperacao(cet);
 		
 		System.out.println(dadosOperacao.toString());
