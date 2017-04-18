@@ -1,65 +1,58 @@
 package br.net.calculator.of.piety.calculator;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.net.calculator.of.piety.bo.cronograma.CronogramaOperacaoCreditoBO;
+import br.net.calculator.of.piety.bo.data.CalcularDataVencimentoBO;
 import br.net.calculator.of.piety.calculator.cet.CalculatorCET;
+import br.net.calculator.of.piety.pietyEnums.EnumSistemaAmortizacao;
+import br.net.calculator.of.piety.to.OperacaoTO;
+import br.net.calculator.of.piety.to.ParcelaTO;
 import br.net.calculator.of.piety.to.cet.DadosEmprestimoCETTO;
 import br.net.calculator.of.piety.to.cet.ParcelaCETTO;
-import br.net.calculator.of.piety.to.operaca.emprestimo.CalendarioParcelaTO;
-import br.net.calculator.of.piety.to.operaca.emprestimo.DadosOperacaoTO;
-import br.net.calculator.of.piety.to.operaca.emprestimo.ParcelaOperacaoTO;
-import br.net.calculator.of.piety.to.operaca.emprestimo.TaxaTO;
+
 
 public class CalculaOperacaoEmprestimo {
 
 	public void calcularEmprestimo() {
 
+		
+		
 		LocalDate dataLiberacao = LocalDate.of(2017, Month.APRIL, 05);
-		Integer numeroParcela = 24;
-		double valorBruto = 10000.00;
-		
-		TaxaTO taxaFixa = getTaxa();
+		Integer quantidadeParcelas = 24;
+		BigDecimal valorOperacao = new BigDecimal("10000.00");
+		double valorLiquido = 0d;
+		BigDecimal taxa = new BigDecimal("0.020");
 
-		DadosOperacaoTO dadosOperacao = new DadosOperacaoTO();
+		CronogramaOperacaoCreditoBO cronogramaOperacaoCreditoBO =  new CronogramaOperacaoCreditoBO();
+		CalcularDataVencimentoBO calcularDataVencimentoBO = new CalcularDataVencimentoBO();
 		
-		dadosOperacao.setDataLiberacao(dataLiberacao);
-		dadosOperacao.setTaxaFixa(taxaFixa);
-		dadosOperacao.setValorBruto(valorBruto);
+		List<LocalDate> vencimentos = calcularDataVencimentoBO.obterCronogramaVencimentoMensalComInicioNoMesSeguinteALiberacao(quantidadeParcelas, dataLiberacao);
 		
-		//dadosOperacao.setParcelasOperacao(gerarParcelaOperacao(numeroParcela));
+		OperacaoTO operacaoTO =  cronogramaOperacaoCreditoBO.montarCronograma(dataLiberacao, quantidadeParcelas, valorOperacao, vencimentos, taxa, EnumSistemaAmortizacao.PRICE);
 		
-		calculaOperacoesAnteriores(dadosOperacao);
+		valorLiquido = operacaoTO.getValorOperacao().floatValue();
+		//obterValorOperacoesASeremLiquidadas();
 		
-		//calculaValorParcelasPrice(dadosOperacao);
+		BigDecimal cet = apuraCet(valorLiquido, operacaoTO.getDataLiberacao(),
+				operacaoTO.getParcelas());
 		
-		calculaValorLiquido(dadosOperacao);
-
-		BigDecimal cet = apuraCet(dadosOperacao.getValorLiquido(), dadosOperacao.getDataLiberacao(),
-				dadosOperacao.getParcelasOperacao());
-		
-		dadosOperacao.setCetOperacao(cet);
-		
-		System.out.println(dadosOperacao.toString());
-
+		operacaoTO.setCet(cet);
+		System.out.println(operacaoTO);
 	}
 
-	private void calculaValorLiquido(DadosOperacaoTO dadosOperacao) {
-		dadosOperacao.setValorLiquido(dadosOperacao.getValorBruto() -dadosOperacao.getValorOperacoesLiquidadas() );
-		
-	}
-
-	private void calculaOperacoesAnteriores(DadosOperacaoTO dadosOperacao) {
-		dadosOperacao.setValorOperacoesLiquidadas(0);
+	
+	private BigDecimal obterValorOperacoesASeremLiquidadas() {
+		return new BigDecimal("0.00");
 		
 	}
 
 	private BigDecimal apuraCet(Double valorParaCet, LocalDate dataLiberacao,
-			List<ParcelaOperacaoTO> parcelasOperacao) {
+			List<ParcelaTO> parcelasOperacao) {
 
 		List<ParcelaCETTO> parcelaCETs = parcelaOperacaoToParcelaCET(parcelasOperacao);
 
@@ -71,13 +64,13 @@ public class CalculaOperacaoEmprestimo {
 		return CalculatorCET.cetOperacao(dadosEmprestimoCET);
 	}
 
-	private List<ParcelaCETTO> parcelaOperacaoToParcelaCET(List<ParcelaOperacaoTO> parcelasOperacao) {
+	private List<ParcelaCETTO> parcelaOperacaoToParcelaCET(List<ParcelaTO> parcelasOperacao) {
 		List<ParcelaCETTO> parcelaCETs = new ArrayList<ParcelaCETTO>();
 
-		for (ParcelaOperacaoTO parcelaOperacao : parcelasOperacao) {
+		for (ParcelaTO parcelaOperacao : parcelasOperacao) {
 			ParcelaCETTO parcelaCET = new ParcelaCETTO();
-			parcelaCET.setDataCobranca(parcelaOperacao.getDataCobranca());
-			parcelaCET.setValorParcela(parcelaOperacao.getValorParcela());
+			parcelaCET.setDataCobranca(parcelaOperacao.getDataVencimento());
+			parcelaCET.setValorParcela(parcelaOperacao.getValor(null));
 			parcelaCETs.add(parcelaCET);
 		}
 		return parcelaCETs;
@@ -90,10 +83,5 @@ public class CalculaOperacaoEmprestimo {
 
 	
 
-	private TaxaTO getTaxa() {
-		TaxaTO taxaFixa = new TaxaTO();
-		taxaFixa.setPecentualTaxa(new BigDecimal(0.0200));
-		return taxaFixa;
-	}
 
 }

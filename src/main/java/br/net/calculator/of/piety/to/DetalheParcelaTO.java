@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 
 public class DetalheParcelaTO {
 	
-	public BigDecimal valor;
-	public String descricao;
-	public DetalheParcelaTO detalheParcelaAnterior;
-	public TipoDetalheParcela tipoDetalheParcela;
+	private BigDecimal valor;
+	private String descricao;
+	private DetalheParcelaTO detalheParcelaAnterior;
+	private TipoDetalheParcela tipoDetalheParcela;
 
 	
 	public DetalheParcelaTO(TipoDetalheParcela tipoDetalheParcela) {
@@ -22,6 +22,14 @@ public class DetalheParcelaTO {
 		this.detalheParcelaAnterior = detalheParcelaAnterior;
 		this.tipoDetalheParcela = detalheParcelaAnterior.getTipoDetalheParcela();
 	}
+
+	
+	
+	public DetalheParcelaTO getDetalheParcelaAnterior() {
+		return detalheParcelaAnterior;
+	}
+
+
 
 	public TipoDetalheParcela getTipoDetalheParcela() {
 		return tipoDetalheParcela;

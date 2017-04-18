@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+import br.net.calculator.of.piety.pietyEnums.EnumSistemaAmortizacao;
 import br.net.calculator.of.piety.to.DetalheParcelaTO;
 import br.net.calculator.of.piety.to.OperacaoTO;
 import br.net.calculator.of.piety.to.ParcelaTO;
-import br.net.calculator.of.piety.to.SistemaAmortizacao;
 import br.net.calculator.of.piety.to.TipoDetalheParcela;
 import br.net.calculator.of.piety.util.math.bigdecimal.util.OpcoesCalculo;
 
@@ -15,12 +15,12 @@ public class CalculadoraSac extends Calculadora {
 
 	
 	public CalculadoraSac(LocalDate dataLiberacao, Integer quantidadeParcela, BigDecimal valorOperacao, List<LocalDate> vencimentos, BigDecimal taxa) {
-		super(SistemaAmortizacao.SAC, dataLiberacao, quantidadeParcela, valorOperacao, vencimentos, taxa);
+		super(EnumSistemaAmortizacao.SAC, dataLiberacao, quantidadeParcela, valorOperacao, vencimentos, taxa);
 	}
 
 
 	public CalculadoraSac(OperacaoTO operacaoTO) {
-		super(SistemaAmortizacao.SAC, operacaoTO);
+		super(EnumSistemaAmortizacao.SAC, operacaoTO);
 	}
 
 

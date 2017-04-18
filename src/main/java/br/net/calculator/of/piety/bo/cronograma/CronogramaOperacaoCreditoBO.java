@@ -5,16 +5,16 @@ import java.time.LocalDate;
 import java.util.List;
 
 import br.net.calculator.of.piety.bo.cronograma.calculadora.Calculadora;
+import br.net.calculator.of.piety.pietyEnums.EnumSistemaAmortizacao;
 import br.net.calculator.of.piety.to.OperacaoTO;
-import br.net.calculator.of.piety.to.SistemaAmortizacao;
 
 public class CronogramaOperacaoCreditoBO {
 
-	public OperacaoTO montarCronograma(final LocalDate dataLiberacao, final Integer quantidadeParcela, final BigDecimal valorOperacao, final List<LocalDate> vencimentos, final BigDecimal taxa, final SistemaAmortizacao sistemaAmortizacao) {
+	public OperacaoTO montarCronograma(final LocalDate dataLiberacao, final Integer quantidadeParcelas, final BigDecimal valorOperacao, final List<LocalDate> vencimentos, final BigDecimal taxa, final EnumSistemaAmortizacao sistemaAmortizacao) {
 
 
 		
-		Calculadora calculadora = Calculadora.getInstancia(sistemaAmortizacao, dataLiberacao, quantidadeParcela, valorOperacao, vencimentos, taxa);
+		Calculadora calculadora = Calculadora.getInstancia(sistemaAmortizacao, dataLiberacao, quantidadeParcelas, valorOperacao, vencimentos, taxa);
 		
 		return calculadora.getOperacaoTO();
 	}

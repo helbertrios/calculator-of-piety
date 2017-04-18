@@ -10,10 +10,10 @@ import org.junit.Test;
 
 import br.net.calculator.of.piety.bo.cronograma.CronogramaOperacaoCreditoBO;
 import br.net.calculator.of.piety.bo.data.CalcularDataVencimentoBO;
+import br.net.calculator.of.piety.pietyEnums.EnumSistemaAmortizacao;
 import br.net.calculator.of.piety.to.DetalheParcelaTO;
 import br.net.calculator.of.piety.to.OperacaoTO;
 import br.net.calculator.of.piety.to.ParcelaTO;
-import br.net.calculator.of.piety.to.SistemaAmortizacao;
 
 public class CronogramaOperacaoCreditoBOTest {
 
@@ -35,7 +35,7 @@ public class CronogramaOperacaoCreditoBOTest {
 		CronogramaOperacaoCreditoBO cronogramaParcelasBO = new CronogramaOperacaoCreditoBO();
 		System.out.println("Teste");
 		List<LocalDate> vencimentosParcelas = calcularDataVencimentoBO.obterCronogramaVencimentoMensalComInicioNoMesSeguinteALiberacao(quantidadeParcelas, dataLiberacao);
-		OperacaoTO operacaoTO =  cronogramaParcelasBO.montarCronograma(dataLiberacao, quantidadeParcelas, valorOperacao, vencimentosParcelas, taxa, SistemaAmortizacao.PRICE); 
+		OperacaoTO operacaoTO =  cronogramaParcelasBO.montarCronograma(dataLiberacao, quantidadeParcelas, valorOperacao, vencimentosParcelas, taxa, EnumSistemaAmortizacao.PRICE); 
 		
 		for (ParcelaTO parcela : operacaoTO.getParcelas()) {
 			System.out.println("=======================================================");

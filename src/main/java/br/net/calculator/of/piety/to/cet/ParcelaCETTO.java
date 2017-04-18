@@ -1,18 +1,29 @@
 package br.net.calculator.of.piety.to.cet;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
-import br.net.calculator.of.piety.to.operaca.emprestimo.CalendarioParcelaTO;
-
-public class ParcelaCETTO extends CalendarioParcelaTO{
+public class ParcelaCETTO {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 4556084475920566701L;
 	
-	
+	private LocalDate dataCobranca;
 	private BigDecimal valorParcela;
+
+
+	
+	
+	public LocalDate getDataCobranca() {
+		return dataCobranca;
+	}
+
+
+	public void setDataCobranca(LocalDate dataCobranca) {
+		this.dataCobranca = dataCobranca;
+	}
 
 
 	public BigDecimal getValorParcela() {
