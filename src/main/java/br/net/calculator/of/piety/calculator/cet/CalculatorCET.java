@@ -3,9 +3,9 @@ package br.net.calculator.of.piety.calculator.cet;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
-import br.net.calculator.of.piety.data.UtilData;
-import br.net.calculator.of.piety.math.bigdecimal.util.BigFunctions;
 import br.net.calculator.of.piety.to.cet.DadosEmprestimoCETTO;
+import br.net.calculator.of.piety.util.data.UtilData;
+import br.net.calculator.of.piety.util.math.bigdecimal.util.BigFunctions;
 
 
 public class CalculatorCET {

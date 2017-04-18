@@ -1,4 +1,4 @@
-package br.net.calculator.of.piety.data;
+package br.net.calculator.of.piety.util.data;
 
 import java.time.Instant;
 import java.time.LocalDate;

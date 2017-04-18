@@ -1,47 +1,29 @@
-package br.net.calculator.of.piety.previa;
+package br.net.calculator.of.piety.to;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Operacao {
+public class OperacaoTO {
 
 	private BigDecimal valorOperacao;
 	private LocalDate dataLiberacao;
 	private BigDecimal taxa;
-	private List<Parcela> parcelas;
-	//private List<Pagamento> pagamentos;
-	
-	
-/*
-	public List<Pagamento> getPagamentos() {
-		if (pagamentos == null) {
-			pagamentos = new ArrayList<Pagamento>();
-			
-		}
+	private Integer quantidadeParcela;
+	private List<ParcelaTO> parcelas;
+	private SistemaAmortizacao sistemaAmortizacao;
 
-		return pagamentos;
-	}
-
-	protected void setPagamentos(List<Pagamento> pagamentos) {
-		this.pagamentos = pagamentos;
-	}
-*/
-
-
-	public List<Parcela> getParcelas() {
+	public List<ParcelaTO> getParcelas() {
 		if (parcelas == null) {
-			parcelas = new ArrayList<Parcela>();
+			parcelas = new ArrayList<ParcelaTO>();
 
 		}
 
 		return parcelas;
 	}
 
-	public void setParcelas(List<Parcela> parcelas) {
+	public void setParcelas(List<ParcelaTO> parcelas) {
 		this.parcelas = parcelas;
 	}
 
@@ -67,6 +49,22 @@ public class Operacao {
 
 	public void setTaxa(BigDecimal taxa) {
 		this.taxa = taxa;
+	}
+
+	public Integer getQuantidadeParcela() {
+		return quantidadeParcela;
+	}
+
+	public void setQuantidadeParcela(Integer quantidadeParcela) {
+		this.quantidadeParcela = quantidadeParcela;
+	}
+
+	public SistemaAmortizacao getSistemaAmortizacao() {
+		return sistemaAmortizacao;
+	}
+
+	public void setSistemaAmortizacao(SistemaAmortizacao sistemaAmortizacao) {
+		this.sistemaAmortizacao = sistemaAmortizacao;
 	}
 
 }

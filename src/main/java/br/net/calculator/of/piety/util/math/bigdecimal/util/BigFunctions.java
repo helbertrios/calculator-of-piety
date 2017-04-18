@@ -1,4 +1,4 @@
-package br.net.calculator.of.piety.math.bigdecimal.util;
+package br.net.calculator.of.piety.util.math.bigdecimal.util;
 
 	
 	/*Licensed to the Apache Software Foundation (ASF) under one

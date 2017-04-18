@@ -31,11 +31,11 @@ public class CalculaOperacaoEmprestimo {
 		dadosOperacao.setTaxaFixa(taxaFixa);
 		dadosOperacao.setValorBruto(valorBruto);
 		
-		dadosOperacao.setParcelasOperacao(gerarParcelaOperacao(numeroParcela));
+		//dadosOperacao.setParcelasOperacao(gerarParcelaOperacao(numeroParcela));
 		
 		calculaOperacoesAnteriores(dadosOperacao);
 		
-		calculaValorParcelasPrice(dadosOperacao);
+		//calculaValorParcelasPrice(dadosOperacao);
 		
 		calculaValorLiquido(dadosOperacao);
 
@@ -88,62 +88,7 @@ public class CalculaOperacaoEmprestimo {
 		v.calcularEmprestimo();
 	}
 
-	private void calculaValorParcelasPrice(DadosOperacaoTO dadosOperacao) {
-
-		setCalendarioParcelasPrice(dadosOperacao.getDataLiberacao().plusMonths(1), dadosOperacao.getParcelasOperacao());
-
-		Integer qtdParcelas = dadosOperacao.getParcelasOperacao().size();
-		BigDecimal valorParcela = new BigDecimal("0.00");
-		BigDecimal valorOperacao = new BigDecimal(dadosOperacao.getValorBruto());
-
-		if (dadosOperacao.getTaxaFixa().getPecentualTaxa().compareTo(BigDecimal.ZERO) == 0) {
-			valorParcela = valorOperacao.divide(BigDecimal.valueOf(qtdParcelas), MathContext.DECIMAL128);
-		} else {
-
-			final BigDecimal i = dadosOperacao.getTaxaFixa().getPecentualTaxa();
-			final BigDecimal umMaisI = BigDecimal.ONE.add(i);
-			final BigDecimal umMaisIElevadoAN = umMaisI.pow(qtdParcelas);
-			final BigDecimal iVezesUmMaisIElevadoAN = i.multiply(umMaisIElevadoAN);
-			final BigDecimal umMaisIElevadoANMenosUm = umMaisIElevadoAN.subtract(BigDecimal.ONE);
-			final BigDecimal valorPresenteDivididoPorUmMaisI = valorOperacao.divide(umMaisI, MathContext.DECIMAL128);
-			final BigDecimal iVezesUmMaisIElevadoANVezesValorPresenteDivididoPorUmMaisI = iVezesUmMaisIElevadoAN
-					.multiply(valorPresenteDivididoPorUmMaisI);
-			
-			valorParcela = iVezesUmMaisIElevadoANVezesValorPresenteDivididoPorUmMaisI.divide(umMaisIElevadoANMenosUm,
-					MathContext.DECIMAL128);
-		}
-
-		for (ParcelaOperacaoTO parcelaOperacao : dadosOperacao.getParcelasOperacao()) {
-			parcelaOperacao.setValorParcela(valorParcela);
-		}
-
-	}
-
-	private List<ParcelaOperacaoTO> gerarParcelaOperacao(Integer numeroParcelas) {
-
-		List<ParcelaOperacaoTO> parcelaOperacaos = new ArrayList<ParcelaOperacaoTO>();
-		Integer contador = 1;
-		while (contador <= numeroParcelas) {
-			parcelaOperacaos.add(new ParcelaOperacaoTO());
-			contador = contador + 1;
-		}
-		return parcelaOperacaos;
-
-	}
-
-	private void setCalendarioParcelasPrice(LocalDate dataPrimeiraParcela,
-			List<? extends CalendarioParcelaTO> calendarioParcelas) {
-
-		Integer contador = 1;
-
-		for (CalendarioParcelaTO calendarioParcela : calendarioParcelas) {
-
-			calendarioParcela.setDataCobranca(dataPrimeiraParcela.plusMonths(contador));
-
-			contador = contador + 1;
-		}
-
-	}
+	
 
 	private TaxaTO getTaxa() {
 		TaxaTO taxaFixa = new TaxaTO();
