@@ -8,6 +8,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import br.net.calculator.of.piety.bo.taxa.TaxaBO;
+import br.net.calculator.of.piety.pietyEnums.EnumMomentoCobrancaEncargo;
+import br.net.calculator.of.piety.pietyEnums.EnumTipoDetalheParcela;
 import br.net.calculator.of.piety.pietyEnums.EnumTipoValorEncargo;
 import br.net.calculator.of.piety.to.EncargoTO;
 
@@ -147,12 +149,12 @@ public class TaxaEstruturaEncargosTest {
 		TaxaBO taxaBO = new TaxaBO();
 		
 		List<EncargoTO> listaEncargosTO = new ArrayList<>();
-		listaEncargosTO.add(new EncargoTO(new BigDecimal("0.0190") ,EnumTipoValorEncargo.PERCENTUAL));
-		listaEncargosTO.add(new EncargoTO(new BigDecimal("0.0200") ,EnumTipoValorEncargo.PERCENTUAL));
-		listaEncargosTO.add(new EncargoTO(new BigDecimal("0.0170") ,EnumTipoValorEncargo.PERCENTUAL));
-		listaEncargosTO.add(new EncargoTO(new BigDecimal("0.0250") ,EnumTipoValorEncargo.PERCENTUAL));
-		listaEncargosTO.add(new EncargoTO(new BigDecimal("0.0320") ,EnumTipoValorEncargo.PERCENTUAL));
-		listaEncargosTO.add(new EncargoTO(new BigDecimal("0.0610") ,EnumTipoValorEncargo.PERCENTUAL));
+		listaEncargosTO.add(new EncargoTO(new BigDecimal("0.0190") ,EnumTipoValorEncargo.PERCENTUAL, EnumMomentoCobrancaEncargo.PARCELA, EnumTipoDetalheParcela.JUROS));
+		listaEncargosTO.add(new EncargoTO(new BigDecimal("0.0200") ,EnumTipoValorEncargo.PERCENTUAL, EnumMomentoCobrancaEncargo.PARCELA, EnumTipoDetalheParcela.JUROS));
+		listaEncargosTO.add(new EncargoTO(new BigDecimal("0.0170") ,EnumTipoValorEncargo.PERCENTUAL, EnumMomentoCobrancaEncargo.PARCELA, EnumTipoDetalheParcela.JUROS));
+		listaEncargosTO.add(new EncargoTO(new BigDecimal("0.0250") ,EnumTipoValorEncargo.PERCENTUAL, EnumMomentoCobrancaEncargo.PARCELA, EnumTipoDetalheParcela.JUROS));
+		listaEncargosTO.add(new EncargoTO(new BigDecimal("0.0320") ,EnumTipoValorEncargo.PERCENTUAL, EnumMomentoCobrancaEncargo.PARCELA, EnumTipoDetalheParcela.JUROS));
+		listaEncargosTO.add(new EncargoTO(new BigDecimal("0.0610") ,EnumTipoValorEncargo.PERCENTUAL, EnumMomentoCobrancaEncargo.PARCELA, EnumTipoDetalheParcela.JUROS));
 		
 		Assert.assertEquals( 0.1740, taxaBO.obterTaxa(listaEncargosTO).doubleValue(), 0.01);
 		
