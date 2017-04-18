@@ -5,10 +5,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 import br.net.calculator.of.piety.pietyEnums.EnumSistemaAmortizacao;
+import br.net.calculator.of.piety.pietyEnums.EnumTipoDetalheParcela;
 import br.net.calculator.of.piety.to.DetalheParcelaTO;
+import br.net.calculator.of.piety.to.EncargoTO;
 import br.net.calculator.of.piety.to.OperacaoTO;
 import br.net.calculator.of.piety.to.ParcelaTO;
-import br.net.calculator.of.piety.to.TipoDetalheParcela;
 import br.net.calculator.of.piety.util.math.bigdecimal.util.OpcoesCalculo;
 
 public class CalculadoraSac extends Calculadora {
@@ -36,15 +37,15 @@ public class CalculadoraSac extends Calculadora {
 	}
 
 	@Override
-	void calcularCapitalDeTodasParcelas() {
+	public void calcularCapitalDeTodasParcelas() {
 		
 		BigDecimal valorParcelaCapital = getValorPrimeiraParcelaCapitalOperacao();
 
 		for (ParcelaTO parcelaTO : operacaoTO.getParcelas()) {
-			DetalheParcelaTO principalTO = new DetalheParcelaTO(TipoDetalheParcela.PRINCIPAL);
+			DetalheParcelaTO principalTO = new DetalheParcelaTO(EnumTipoDetalheParcela.PRINCIPAL);
 
 			principalTO.setValor(valorParcelaCapital);
-			principalTO.setDescricao(TipoDetalheParcela.PRINCIPAL.getDescricao());
+			principalTO.setDescricao(EnumTipoDetalheParcela.PRINCIPAL.getDescricao());
 
 			parcelaTO.getDetalhesParcela().add(principalTO);
 

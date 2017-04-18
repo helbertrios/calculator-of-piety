@@ -15,7 +15,9 @@ public class OperacaoTO {
 	private BigDecimal taxa;
 	private Integer quantidadeParcela;
 	private List<ParcelaTO> parcelas;
+	private DespesasOperacaoTO despesasOperacao;
 	private EnumSistemaAmortizacao sistemaAmortizacao;
+
 
 	public BigDecimal getCet() {
 		return cet;
@@ -23,6 +25,27 @@ public class OperacaoTO {
 
 	public void setCet(BigDecimal cet) {
 		this.cet = cet;
+	}
+
+	public DespesasOperacaoTO getDespesasOperacao() {
+		if (despesasOperacao == null) {
+			despesasOperacao = new DespesasOperacaoTO();
+			
+		}
+
+		return despesasOperacao;
+	}
+
+	public void setDespesasOperacao(DespesasOperacaoTO despesasOperacao) {
+		this.despesasOperacao = despesasOperacao;
+	}
+
+	public BigDecimal getTaxa() {
+		return taxa;
+	}
+
+	public void setTaxa(BigDecimal taxa) {
+		this.taxa = taxa;
 	}
 
 	public List<ParcelaTO> getParcelas() {
@@ -54,14 +77,6 @@ public class OperacaoTO {
 		this.dataLiberacao = dataLiberacao;
 	}
 
-	public BigDecimal getTaxa() {
-		return taxa;
-	}
-
-	public void setTaxa(BigDecimal taxa) {
-		this.taxa = taxa;
-	}
-
 	public Integer getQuantidadeParcela() {
 		return quantidadeParcela;
 	}
@@ -80,42 +95,24 @@ public class OperacaoTO {
 
 	@Override
 	public String toString() {
-		StringBuilder retorno = new StringBuilder(super.toString()+'\n');
+		StringBuilder retorno = new StringBuilder(super.toString() + '\n');
+		retorno.append("=======================================================" + '\n' );
+		retorno.append("valor Operacao...........: " + getValorOperacao() + '\n');
+		retorno.append("Cet Operacao.............: " + getCet() + '\n');
+		retorno.append("Data Liberacao...........: " + getDataLiberacao() + '\n');
+		retorno.append("Taxa.....................: " + getTaxa().multiply(new BigDecimal("100")) + '\n');
+		retorno.append("Qtd Parcelas.............: " + getQuantidadeParcela() + '\n');
+		retorno.append("Sistema de Amortização...: " + getSistemaAmortizacao().getDescricao() + '\n');
+		retorno.append("Despesa Operacao.........: " + getDespesasOperacao() + '\n');
 		
-		retorno.append("======================================================="+'\n'+'\n');
-		retorno.append("valor Operacao...........: " + getValorOperacao()+'\n');
-		retorno.append("Cet Operacao.............: " + getCet()+'\n');
-		retorno.append("Data Liberacao...........: " + getDataLiberacao()+'\n');
-		retorno.append("Taxa.....................: " + getTaxa().multiply(new BigDecimal("100"))+'\n');
-		retorno.append("Qtd Parcelas.............: " + getQuantidadeParcela()+'\n');
-		retorno.append("Sistema de Amortização...: " + getSistemaAmortizacao().getDescricao()+'\n');		
-		
-		for (ParcelaTO parcela : getParcelas()) {
-			retorno.append("======================================================="+'\n');
-			retorno.append(""+'\n');
-			retorno.append("Vencimento.......: " + parcela.getDataVencimento()+'\n');
-			retorno.append("Valor Parcela.......: " + parcela.getValor(null)+'\n');			
-			for (DetalheParcelaTO detalheParcela : parcela.getDetalhesParcela()) {
-				retorno.append("......=================================================="+'\n');
-				retorno.append("......Tipo Detalhe ...........: " + detalheParcela.getTipoDetalheParcela().getDescricao()+'\n');
-				retorno.append("......Valor ..................: " + detalheParcela.getValor()+'\n');
-				retorno.append("......Descrição...............: " + detalheParcela.getDescricao()+'\n');
-				if(detalheParcela.getDetalheParcelaAnterior() != null){ 
-					retorno.append("..........Detalhe Anterior====================================="+'\n');
-					retorno.append("..............Tipo Detalhe ...........: " + detalheParcela.getDetalheParcelaAnterior().getTipoDetalheParcela().getDescricao()+'\n');
-					retorno.append("..............Valor ..................: " + detalheParcela.getDetalheParcelaAnterior().getValor()+'\n');
-					retorno.append("..............Descrição...............: " + detalheParcela.getDetalheParcelaAnterior().getDescricao()+'\n');
-					retorno.append("..............================================================="+'\n');
-				}
-				retorno.append("......================================================="+'\n');
-			}
-			retorno.append("Valor Parcela....: " + parcela.getValor(null)+'\n');
+		for (ParcelaTO parcelaTO : parcelas) {
+			retorno.append("Parcela:...: " +parcelaTO );	
 		}
-		retorno.append(""+'\n');
-		retorno.append("======================================================="+'\n');
 
+		retorno.append("" + '\n');
+		retorno.append("=======================================================" + '\n');
 
-		return retorno.toString() ;
+		return retorno.toString();
 	}
 
 }

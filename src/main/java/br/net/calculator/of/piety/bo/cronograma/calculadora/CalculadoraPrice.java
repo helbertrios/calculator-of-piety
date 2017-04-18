@@ -5,16 +5,17 @@ import java.time.LocalDate;
 import java.util.List;
 
 import br.net.calculator.of.piety.pietyEnums.EnumSistemaAmortizacao;
+import br.net.calculator.of.piety.pietyEnums.EnumTipoDetalheParcela;
 import br.net.calculator.of.piety.to.DetalheParcelaTO;
+import br.net.calculator.of.piety.to.EncargoTO;
 import br.net.calculator.of.piety.to.OperacaoTO;
 import br.net.calculator.of.piety.to.ParcelaTO;
-import br.net.calculator.of.piety.to.TipoDetalheParcela;
 import br.net.calculator.of.piety.util.math.bigdecimal.util.OpcoesCalculo;
 
 public class CalculadoraPrice extends Calculadora {
 
 	
-	public CalculadoraPrice(LocalDate dataLiberacao, Integer quantidadeParcela, BigDecimal valorOperacao, List<LocalDate> vencimentos, BigDecimal taxa) {
+	public CalculadoraPrice(LocalDate dataLiberacao, Integer quantidadeParcela, BigDecimal valorOperacao, List<LocalDate> vencimentos,   BigDecimal taxa) {
 		super(EnumSistemaAmortizacao.PRICE, dataLiberacao, quantidadeParcela, valorOperacao, vencimentos, taxa);
 	}
 
@@ -40,15 +41,15 @@ public class CalculadoraPrice extends Calculadora {
 	
 	
 	@Override
-	void calcularCapitalDeTodasParcelas() {
+	public void calcularCapitalDeTodasParcelas() {
 		
 		BigDecimal valorParcelaCapital = this.getValorPrimeiraParcelaCapitalOperacao();
 		
 		for (ParcelaTO parcelaTO : operacaoTO.getParcelas()) {
-			DetalheParcelaTO principalTO = new DetalheParcelaTO(TipoDetalheParcela.PRINCIPAL);
+			DetalheParcelaTO principalTO = new DetalheParcelaTO(EnumTipoDetalheParcela.PRINCIPAL);
 			
 			principalTO.setValor(valorParcelaCapital);
-			principalTO.setDescricao(TipoDetalheParcela.PRINCIPAL.getDescricao());
+			principalTO.setDescricao(EnumTipoDetalheParcela.PRINCIPAL.getDescricao());
 			
 			parcelaTO.getDetalhesParcela().add(principalTO);
 			

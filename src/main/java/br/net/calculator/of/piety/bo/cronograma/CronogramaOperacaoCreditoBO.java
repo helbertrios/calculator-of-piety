@@ -18,6 +18,26 @@ public class CronogramaOperacaoCreditoBO {
 		
 		return calculadora.getOperacaoTO();
 	}
+	
+	
+	public OperacaoTO calcularEncargos(OperacaoTO operacaoTO) {
+		
+		Calculadora calculadora = Calculadora.getInstancia(operacaoTO.getSistemaAmortizacao(), operacaoTO);
+		calculadora.calcularEncargos();
+		
+		return calculadora.getOperacaoTO();
+	}
+
+	
+	public OperacaoTO calcularPrincipal(OperacaoTO operacaoTO) {
+		
+		Calculadora calculadora = Calculadora.getInstancia(operacaoTO.getSistemaAmortizacao(), operacaoTO);
+		
+		calculadora.calcularCapitalDeTodasParcelas();
+		
+		
+		return calculadora.getOperacaoTO();
+	}
 
 
 

@@ -1,12 +1,12 @@
 package br.net.calculator.of.piety.pietyEnums;
 
-public enum EnumTipoDetalheParcela {
-	PRINCIPAL(1, "Principal"), JUROS(2, "Juros"), OUTROS(3, "Outros");
+public enum EnumMomentoCobrancaEncargo {
+	LIBERACAO(1, "Liberação"), PARCELA(2, "Parcela");
 	
 	private Integer codigo;
 	private String descricao;
 
-	EnumTipoDetalheParcela(int codigo, String descricao){
+	EnumMomentoCobrancaEncargo(int codigo, String descricao){
 		this.codigo = codigo;
 		this.descricao = descricao;
 	}
@@ -15,12 +15,12 @@ public enum EnumTipoDetalheParcela {
 		return codigo;
 	}
 	
-	public static EnumTipoDetalheParcela obterPorCodigo(Integer codigo){
+	public static EnumMomentoCobrancaEncargo obterPorCodigo(Integer codigo){
 		if(codigo == null){
 			return null;
 		}
 		
-		for(EnumTipoDetalheParcela o : values()){
+		for(EnumMomentoCobrancaEncargo o : values()){
 			if(o.getCodigo().equals(codigo)){
 				return o;
 			}

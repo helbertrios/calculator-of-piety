@@ -5,6 +5,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.UIDefaults.LazyInputMap;
+
+import br.net.calculator.of.piety.pietyEnums.EnumTipoDetalheParcela;
+
 public class ParcelaTO implements TO {
 
 	/**
@@ -14,8 +18,22 @@ public class ParcelaTO implements TO {
 	
 	private List<DetalheParcelaTO> detalhesParcela;
 	private LocalDate dataVencimento;
+	private List<EncargoTO> encargosTO;
+	
+	
+	public List<EncargoTO> getEncargosTO() {
+		if (encargosTO == null) {
+			encargosTO = new ArrayList<EncargoTO>(0);
 
-	public BigDecimal getValor(TipoDetalheParcela tipoDetalhes) {
+		}
+
+		return encargosTO;
+	}
+	public void setEncargosTO(List<EncargoTO> encargosTO) {
+		this.encargosTO = encargosTO;
+	}
+
+	public BigDecimal getValor(EnumTipoDetalheParcela tipoDetalhes) {
 		
 		BigDecimal saldoDevedor = new BigDecimal("0.00");
 		
@@ -52,6 +70,23 @@ public class ParcelaTO implements TO {
 
 	public void setDetalheParcela(List<DetalheParcelaTO> detalhesParcela) {
 		this.detalhesParcela = detalhesParcela;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder retorno = new StringBuilder(super.toString() + '\n');
+		retorno.append("=======================================================" + '\n');
+		retorno.append("Vencimento.......: " + getDataVencimento() + '\n');
+		retorno.append("Valor Parcela.......: " + getValor(null) + '\n');
+		for (DetalheParcelaTO detalheParcelaTO : detalhesParcela) {
+			retorno.append("Detalhe Parcela.......: " + detalheParcelaTO );
+		}
+		
+		for (EncargoTO encargoTO : encargosTO) {
+			retorno.append("Encargos Parcela.......: " + encargoTO );
+		}
+		retorno.append("=======================================================" + '\n');
+		return retorno.toString();
 	}
 	
 	
