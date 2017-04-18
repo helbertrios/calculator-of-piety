@@ -9,7 +9,7 @@ import javax.swing.UIDefaults.LazyInputMap;
 
 import br.net.calculator.of.piety.pietyEnums.EnumTipoDetalheParcela;
 
-public class ParcelaTO implements TO {
+public class ParcelaTO implements TO, ICalculoEncargos {
 
 	/**
 	 * 

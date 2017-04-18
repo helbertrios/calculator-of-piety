@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.net.calculator.of.piety.pietyEnums.EnumMomentoCobrancaEncargo;
 import br.net.calculator.of.piety.pietyEnums.EnumSistemaAmortizacao;
 import br.net.calculator.of.piety.pietyEnums.EnumTipoDetalheParcela;
 import br.net.calculator.of.piety.pietyEnums.EnumTipoValorEncargo;
@@ -19,9 +18,7 @@ public abstract class Calculadora {
 
 	final OperacaoTO operacaoTO;
 
-	public static Calculadora getInstancia(final EnumSistemaAmortizacao sistemaAmortizacao,
-			final LocalDate dataLiberacao, final Integer quantidadeParcela, final BigDecimal valorOperacao,
-			final List<LocalDate> vencimentos, final BigDecimal taxa) {
+	public static Calculadora getInstancia(final EnumSistemaAmortizacao sistemaAmortizacao, final LocalDate dataLiberacao, final Integer quantidadeParcela, final BigDecimal valorOperacao, final List<LocalDate> vencimentos, final BigDecimal taxa) {
 
 		if (EnumSistemaAmortizacao.PRICE.equals(sistemaAmortizacao)) {
 			return new CalculadoraPrice(dataLiberacao, quantidadeParcela, valorOperacao, vencimentos, taxa);
@@ -34,8 +31,7 @@ public abstract class Calculadora {
 		throw new UnsupportedOperationException("Sistema de amortiza��o n�o suportado");
 	}
 
-	public static Calculadora getInstancia(final EnumSistemaAmortizacao sistemaAmortizacao,
-			final OperacaoTO operacaoTO) {
+	public static Calculadora getInstancia(final EnumSistemaAmortizacao sistemaAmortizacao, final OperacaoTO operacaoTO) {
 
 		if (EnumSistemaAmortizacao.PRICE.equals(sistemaAmortizacao)) {
 			return new CalculadoraPrice(operacaoTO);
@@ -48,9 +44,7 @@ public abstract class Calculadora {
 		throw new UnsupportedOperationException("Sistema de amortiza��o n�o suportado");
 	}
 
-	public Calculadora(final EnumSistemaAmortizacao sistemaAmortizacao, final LocalDate dataLiberacao,
-			final Integer quantidadeParcela, final BigDecimal valorOperacao, final List<LocalDate> vencimentos,
-			final BigDecimal taxa) {
+	public Calculadora(final EnumSistemaAmortizacao sistemaAmortizacao, final LocalDate dataLiberacao, final Integer quantidadeParcela, final BigDecimal valorOperacao, final List<LocalDate> vencimentos, final BigDecimal taxa) {
 		super();
 		operacaoTO = new OperacaoTO();
 		operacaoTO.setDataLiberacao(dataLiberacao);
@@ -62,9 +56,9 @@ public abstract class Calculadora {
 
 		montarVencimentoDoCronogramaParcelas(operacaoTO.getParcelas(), vencimentos);
 
-		//calcularCapitalDeTodasParcelas();
+		// calcularCapitalDeTodasParcelas();
 		// calcularJurosDeTodasParcelas();
-		//calcularEncargos();
+		// calcularEncargos();
 	}
 
 	public Calculadora(final EnumSistemaAmortizacao sistemaAmortizacao, final OperacaoTO operacaoTO) {
@@ -76,8 +70,8 @@ public abstract class Calculadora {
 			throw new IllegalArgumentException("As parcelas n�o foram geradas corretamente.");
 		}
 
-		//calcularCapitalDeTodasParcelas();
-		//calcularEncargos();
+		// calcularCapitalDeTodasParcelas();
+		// calcularEncargos();
 	}
 
 	public abstract BigDecimal getValorPrimeiraParcelaCapitalOperacao();
@@ -103,45 +97,51 @@ public abstract class Calculadora {
 	 * } }
 	 */
 
-	private void calcularEncargos(List<EncargoTO> encargosTO, ParcelaTO parcelaTO, BigDecimal saldoDevedor) {
+	private void calcularEncargos(List<EncargoTO> encargosTO, List<DetalheParcelaTO> detalhesParcelaTO, BigDecimal saldoDevedor) {
 
 		for (EncargoTO encargoTO : encargosTO) {
-			EnumTipoDetalheParcela tipoDetalhe = EnumTipoDetalheParcela.OUTROS;
-			if (encargoTO.getTipoDetalheParcela() != null){
-				tipoDetalhe = encargoTO.getTipoDetalheParcela();
-			}
-			
+
+			EnumTipoDetalheParcela tipoDetalhe = encargoTO.getTipoDetalheParcela() == null ? EnumTipoDetalheParcela.OUTROS : encargoTO.getTipoDetalheParcela();
+
 			DetalheParcelaTO detalheParcelaTO = new DetalheParcelaTO(tipoDetalhe);
 			detalheParcelaTO.setDescricao(encargoTO.getDescricaoEncargo());
+			detalheParcelaTO.setValor(obterValorEncargo(encargoTO, saldoDevedor));
 
-			if (encargoTO.getTipoValorEncargo().equals(EnumTipoValorEncargo.VALOR)) {
-				detalheParcelaTO.setValor(encargoTO.getValorEncargo());
-			} else {
+			detalhesParcelaTO.add(detalheParcelaTO);
 
-				detalheParcelaTO
-						.setValor(saldoDevedor.multiply(encargoTO.getTaxaEncargo(), OpcoesCalculo.MathContextPadrao));
-			}
+			calcularEncargos(encargoTO.getEncargosTO(), detalhesParcelaTO, saldoDevedor.add(detalheParcelaTO.getValor()));
 
-			calcularEncargos(encargoTO.getEncargosTO(), parcelaTO, saldoDevedor.add(detalheParcelaTO.getValor()));
+		}
 
-			if (encargoTO.getMomentoCobrancaEncargo().equals(EnumMomentoCobrancaEncargo.LIBERACAO)) {
-				operacaoTO.getDespesasOperacao().getDetalhesParcela().add(detalheParcelaTO);
-			} else {
-				parcelaTO.getDetalhesParcela().add(detalheParcelaTO);
-			}
+	}
+
+	public void calcularEncargosParcela() {
+		BigDecimal saldoDevedor = operacaoTO.getValorOperacao();
+		for (ParcelaTO parcelaTO : operacaoTO.getParcelas()) {
+
+			calcularEncargos(parcelaTO.getEncargosTO(), parcelaTO.getDetalhesParcela(), saldoDevedor);
+
+			saldoDevedor = saldoDevedor.subtract(parcelaTO.getValor(EnumTipoDetalheParcela.PRINCIPAL), OpcoesCalculo.MathContextPadrao);
 
 		}
 	}
 
-	public void calcularEncargos() {
+	public void calcularEncargosOperacao() {
 		BigDecimal saldoDevedor = operacaoTO.getValorOperacao();
-		for (ParcelaTO parcelaTO : operacaoTO.getParcelas()) {
-			calcularEncargos(parcelaTO.getEncargosTO(), parcelaTO, saldoDevedor);
 
-			saldoDevedor = saldoDevedor.subtract(parcelaTO.getValor(EnumTipoDetalheParcela.PRINCIPAL),
-					OpcoesCalculo.MathContextPadrao);
+		calcularEncargos(operacaoTO.getDespesasOperacao().getEncargosTO(), operacaoTO.getDespesasOperacao().getDetalhesParcela(), saldoDevedor);
 
+
+	}
+
+	private BigDecimal obterValorEncargo(EncargoTO encargoTO, BigDecimal baseCalculo) {
+		if (encargoTO.getTipoValorEncargo().equals(EnumTipoValorEncargo.VALOR)) {
+			return encargoTO.getValorEncargo();
+		} else {
+
+			return baseCalculo.multiply(encargoTO.getTaxaEncargo(), OpcoesCalculo.MathContextPadrao);
 		}
+
 	}
 
 	/**
@@ -151,8 +151,7 @@ public abstract class Calculadora {
 	 * @param vencimentos
 	 * 
 	 */
-	private void montarVencimentoDoCronogramaParcelas(final List<ParcelaTO> cronograma,
-			final List<LocalDate> vencimentos) {
+	private void montarVencimentoDoCronogramaParcelas(final List<ParcelaTO> cronograma, final List<LocalDate> vencimentos) {
 
 		for (int i = 0; i < vencimentos.size(); i++) {
 			ParcelaTO parcelaTO = new ParcelaTO();

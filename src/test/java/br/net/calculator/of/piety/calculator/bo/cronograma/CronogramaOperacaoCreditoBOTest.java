@@ -99,13 +99,12 @@ public class CronogramaOperacaoCreditoBOTest {
 		List<LocalDate> vencimentosParcelas = calcularDataVencimentoBO.obterCronogramaVencimentoMensalComInicioNoMesSeguinteALiberacao(quantidadeParcelas, dataLiberacao);
 		
 		OperacaoTO operacaoTO =  cronogramaParcelasBO.montarCronograma(dataLiberacao, quantidadeParcelas, valorOperacao, vencimentosParcelas, new BigDecimal("0.0179"), EnumSistemaAmortizacao.PRICE); 
-		
+		operacaoTO.getDespesasOperacao().getEncargosTO().add(encargoTO1);
 		for (ParcelaTO parcelaTO : operacaoTO.getParcelas()) {
 			parcelaTO.getEncargosTO().add(encargoTO1);
 			parcelaTO.getEncargosTO().add(encargoTO2);
 			parcelaTO.getEncargosTO().add(encargoTOOpercao);
 			
-			System.out.println(taxaBO.obterTaxa(parcelaTO.getEncargosTO()));
 		}
 
 

@@ -12,8 +12,6 @@ public class CronogramaOperacaoCreditoBO {
 
 	public OperacaoTO montarCronograma(final LocalDate dataLiberacao, final Integer quantidadeParcelas, final BigDecimal valorOperacao, final List<LocalDate> vencimentos, final BigDecimal taxa, final EnumSistemaAmortizacao sistemaAmortizacao) {
 
-
-		
 		Calculadora calculadora = Calculadora.getInstancia(sistemaAmortizacao, dataLiberacao, quantidadeParcelas, valorOperacao, vencimentos, taxa);
 		
 		return calculadora.getOperacaoTO();
@@ -23,7 +21,8 @@ public class CronogramaOperacaoCreditoBO {
 	public OperacaoTO calcularEncargos(OperacaoTO operacaoTO) {
 		
 		Calculadora calculadora = Calculadora.getInstancia(operacaoTO.getSistemaAmortizacao(), operacaoTO);
-		calculadora.calcularEncargos();
+		calculadora.calcularEncargosOperacao();
+		calculadora.calcularEncargosParcela();
 		
 		return calculadora.getOperacaoTO();
 	}

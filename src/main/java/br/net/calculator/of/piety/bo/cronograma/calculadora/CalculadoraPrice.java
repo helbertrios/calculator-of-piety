@@ -7,7 +7,6 @@ import java.util.List;
 import br.net.calculator.of.piety.pietyEnums.EnumSistemaAmortizacao;
 import br.net.calculator.of.piety.pietyEnums.EnumTipoDetalheParcela;
 import br.net.calculator.of.piety.to.DetalheParcelaTO;
-import br.net.calculator.of.piety.to.EncargoTO;
 import br.net.calculator.of.piety.to.OperacaoTO;
 import br.net.calculator.of.piety.to.ParcelaTO;
 import br.net.calculator.of.piety.util.math.bigdecimal.util.OpcoesCalculo;
