@@ -7,9 +7,9 @@ import java.util.List;
 
 import javax.swing.UIDefaults.LazyInputMap;
 
-import br.net.calculator.of.piety.pietyEnums.EnumTipoDetalheParcela;
+import br.net.calculator.of.piety.pietyEnums.EnumTipoLancamento;
 
-public class DespesasOperacaoTO implements TO, ICalculoEncargos {
+public class DespesasOperacaoTO implements TO {
 
 	/**
 	 * 
@@ -21,7 +21,7 @@ public class DespesasOperacaoTO implements TO, ICalculoEncargos {
 	
 	
 
-	@Override
+	
 	public List<EncargoTO> getEncargosTO() {
 		if (encargosTO == null) {
 			encargosTO = new ArrayList<EncargoTO>();
@@ -30,12 +30,12 @@ public class DespesasOperacaoTO implements TO, ICalculoEncargos {
 		return encargosTO;
 	}
 
-	@Override
+	
 	public void setEncargosTO(List<EncargoTO> encargosTO) {
 		this.encargosTO = encargosTO;
 	}
 
-	@Override
+	
 	public List<DetalheParcelaTO> getDetalhesParcela() {
 		if (detalhesParcela == null) {
 			detalhesParcela = new ArrayList<DetalheParcelaTO>();
@@ -44,7 +44,7 @@ public class DespesasOperacaoTO implements TO, ICalculoEncargos {
 		return detalhesParcela;
 	}
 
-	@Override
+	
 	public void setDetalheParcela(List<DetalheParcelaTO> detalhesParcela) {
 		this.detalhesParcela = detalhesParcela;
 	}

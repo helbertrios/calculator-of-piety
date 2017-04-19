@@ -12,7 +12,7 @@ public class OperacaoTO {
 	private BigDecimal valorOperacao;
 	private BigDecimal cet;
 	private LocalDate dataLiberacao;
-	private BigDecimal taxa;
+	//private BigDecimal taxa;
 	private Integer quantidadeParcela;
 	private List<ParcelaTO> parcelas;
 	private DespesasOperacaoTO despesasOperacao;
@@ -40,13 +40,13 @@ public class OperacaoTO {
 		this.despesasOperacao = despesasOperacao;
 	}
 
-	public BigDecimal getTaxa() {
+/*	public BigDecimal getTaxa() {
 		return taxa;
 	}
 
 	public void setTaxa(BigDecimal taxa) {
 		this.taxa = taxa;
-	}
+	}*/
 
 	public List<ParcelaTO> getParcelas() {
 		if (parcelas == null) {
@@ -100,7 +100,7 @@ public class OperacaoTO {
 		retorno.append("valor Operacao...........: " + getValorOperacao() + '\n');
 		retorno.append("Cet Operacao.............: " + getCet() + '\n');
 		retorno.append("Data Liberacao...........: " + getDataLiberacao() + '\n');
-		retorno.append("Taxa.....................: " + getTaxa().multiply(new BigDecimal("100")) + '\n');
+		//retorno.append("Taxa.....................: " + getTaxa().multiply(new BigDecimal("100")) + '\n');
 		retorno.append("Qtd Parcelas.............: " + getQuantidadeParcela() + '\n');
 		retorno.append("Sistema de Amortização...: " + getSistemaAmortizacao().getDescricao() + '\n');
 		retorno.append("Despesa Operacao.........: " + getDespesasOperacao() + '\n');

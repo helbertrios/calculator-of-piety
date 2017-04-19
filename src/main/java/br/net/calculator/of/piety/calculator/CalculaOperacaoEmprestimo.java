@@ -26,14 +26,13 @@ public class CalculaOperacaoEmprestimo {
 		Integer quantidadeParcelas = 24;
 		BigDecimal valorOperacao = new BigDecimal("10000.00");
 		double valorLiquido = 0d;
-		BigDecimal taxa = new BigDecimal("0.020");
 
 		CronogramaOperacaoCreditoBO cronogramaOperacaoCreditoBO =  new CronogramaOperacaoCreditoBO();
 		CalcularDataVencimentoBO calcularDataVencimentoBO = new CalcularDataVencimentoBO();
 		
 		List<LocalDate> vencimentos = calcularDataVencimentoBO.obterCronogramaVencimentoMensalComInicioNoMesSeguinteALiberacao(quantidadeParcelas, dataLiberacao);
 		
-		OperacaoTO operacaoTO =  cronogramaOperacaoCreditoBO.montarCronograma(dataLiberacao, quantidadeParcelas, valorOperacao, vencimentos, taxa, EnumSistemaAmortizacao.PRICE);
+		OperacaoTO operacaoTO =  cronogramaOperacaoCreditoBO.montarCronograma(dataLiberacao, quantidadeParcelas, valorOperacao, vencimentos, EnumSistemaAmortizacao.PRICE);
 		
 		valorLiquido = operacaoTO.getValorOperacao().floatValue();
 		//obterValorOperacoesASeremLiquidadas();

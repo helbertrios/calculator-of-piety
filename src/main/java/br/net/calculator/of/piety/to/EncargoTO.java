@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.net.calculator.of.piety.pietyEnums.EnumMomentoCobrancaEncargo;
-import br.net.calculator.of.piety.pietyEnums.EnumTipoDetalheParcela;
+import br.net.calculator.of.piety.pietyEnums.EnumTipoLancamento;
 import br.net.calculator.of.piety.pietyEnums.EnumTipoValorEncargo;
 
 public class EncargoTO implements TO {
@@ -20,7 +20,7 @@ public class EncargoTO implements TO {
 	private String descricaoEncargo;
 	private EnumTipoValorEncargo tipoValorEncargo;
 	private EnumMomentoCobrancaEncargo momentoCobrancaEncargo;
-	private EnumTipoDetalheParcela tipoDetalheParcela;
+	private EnumTipoLancamento tipoDetalheParcela;
 	private List<EncargoTO> encargosTO;
 	
 	
@@ -37,12 +37,12 @@ public class EncargoTO implements TO {
 	}
 
 
-	public EnumTipoDetalheParcela getTipoDetalheParcela() {
+	public EnumTipoLancamento getTipoDetalheParcela() {
 		return tipoDetalheParcela;
 	}
 
 
-	public void setTipoDetalheParcela(EnumTipoDetalheParcela tipoDetalheParcela) {
+	public void setTipoDetalheParcela(EnumTipoLancamento tipoDetalheParcela) {
 		this.tipoDetalheParcela = tipoDetalheParcela;
 	}
 
@@ -55,7 +55,7 @@ public class EncargoTO implements TO {
 	public EncargoTO() {
 	}
 	
-	public EncargoTO(BigDecimal valor,  EnumTipoValorEncargo tipoEncargo, EnumMomentoCobrancaEncargo momentoCobrancaEncargo, EnumTipoDetalheParcela tipoDetalheParcela) {
+	public EncargoTO(BigDecimal valor,  EnumTipoValorEncargo tipoEncargo, EnumMomentoCobrancaEncargo momentoCobrancaEncargo, EnumTipoLancamento tipoDetalheParcela) {
 		this.tipoDetalheParcela = tipoDetalheParcela;
 		this.tipoValorEncargo = tipoEncargo;
 		this.momentoCobrancaEncargo =  momentoCobrancaEncargo;

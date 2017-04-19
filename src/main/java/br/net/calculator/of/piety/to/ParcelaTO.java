@@ -7,9 +7,9 @@ import java.util.List;
 
 import javax.swing.UIDefaults.LazyInputMap;
 
-import br.net.calculator.of.piety.pietyEnums.EnumTipoDetalheParcela;
+import br.net.calculator.of.piety.pietyEnums.EnumTipoLancamento;
 
-public class ParcelaTO implements TO, ICalculoEncargos {
+public class ParcelaTO implements TO {
 
 	/**
 	 * 
@@ -33,7 +33,7 @@ public class ParcelaTO implements TO, ICalculoEncargos {
 		this.encargosTO = encargosTO;
 	}
 
-	public BigDecimal getValor(EnumTipoDetalheParcela tipoDetalhes) {
+	public BigDecimal getValor(EnumTipoLancamento tipoDetalhes) {
 		
 		BigDecimal saldoDevedor = new BigDecimal("0.00");
 		

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.net.calculator.of.piety.pietyEnums.EnumSistemaAmortizacao;
-import br.net.calculator.of.piety.pietyEnums.EnumTipoDetalheParcela;
+import br.net.calculator.of.piety.pietyEnums.EnumTipoLancamento;
 import br.net.calculator.of.piety.pietyEnums.EnumTipoValorEncargo;
 import br.net.calculator.of.piety.to.DetalheParcelaTO;
 import br.net.calculator.of.piety.to.EncargoTO;
@@ -18,14 +18,14 @@ public abstract class Calculadora {
 
 	final OperacaoTO operacaoTO;
 
-	public static Calculadora getInstancia(final EnumSistemaAmortizacao sistemaAmortizacao, final LocalDate dataLiberacao, final Integer quantidadeParcela, final BigDecimal valorOperacao, final List<LocalDate> vencimentos, final BigDecimal taxa) {
+	public static Calculadora getInstancia(final EnumSistemaAmortizacao sistemaAmortizacao, final LocalDate dataLiberacao, final Integer quantidadeParcela, final BigDecimal valorOperacao, final List<LocalDate> vencimentos) {
 
 		if (EnumSistemaAmortizacao.PRICE.equals(sistemaAmortizacao)) {
-			return new CalculadoraPrice(dataLiberacao, quantidadeParcela, valorOperacao, vencimentos, taxa);
+			return new CalculadoraPrice(dataLiberacao, quantidadeParcela, valorOperacao, vencimentos);
 		}
 
 		if (EnumSistemaAmortizacao.SAC.equals(sistemaAmortizacao)) {
-			return new CalculadoraSac(dataLiberacao, quantidadeParcela, valorOperacao, vencimentos, taxa);
+			return new CalculadoraSac(dataLiberacao, quantidadeParcela, valorOperacao, vencimentos);
 		}
 
 		throw new UnsupportedOperationException("Sistema de amortiza��o n�o suportado");
@@ -44,21 +44,16 @@ public abstract class Calculadora {
 		throw new UnsupportedOperationException("Sistema de amortiza��o n�o suportado");
 	}
 
-	public Calculadora(final EnumSistemaAmortizacao sistemaAmortizacao, final LocalDate dataLiberacao, final Integer quantidadeParcela, final BigDecimal valorOperacao, final List<LocalDate> vencimentos, final BigDecimal taxa) {
+	public Calculadora(final EnumSistemaAmortizacao sistemaAmortizacao, final LocalDate dataLiberacao, final Integer quantidadeParcela, final BigDecimal valorOperacao, final List<LocalDate> vencimentos) {
 		super();
 		operacaoTO = new OperacaoTO();
 		operacaoTO.setDataLiberacao(dataLiberacao);
 		operacaoTO.setQuantidadeParcela(quantidadeParcela);
 		operacaoTO.setValorOperacao(valorOperacao);
-		operacaoTO.setTaxa(taxa);
 		operacaoTO.setParcelas(new ArrayList<ParcelaTO>(quantidadeParcela));
 		operacaoTO.setSistemaAmortizacao(sistemaAmortizacao);
 
 		montarVencimentoDoCronogramaParcelas(operacaoTO.getParcelas(), vencimentos);
-
-		// calcularCapitalDeTodasParcelas();
-		// calcularJurosDeTodasParcelas();
-		// calcularEncargos();
 	}
 
 	public Calculadora(final EnumSistemaAmortizacao sistemaAmortizacao, final OperacaoTO operacaoTO) {
@@ -69,9 +64,6 @@ public abstract class Calculadora {
 		if (operacaoTO.getParcelas().size() != operacaoTO.getQuantidadeParcela()) {
 			throw new IllegalArgumentException("As parcelas n�o foram geradas corretamente.");
 		}
-
-		// calcularCapitalDeTodasParcelas();
-		// calcularEncargos();
 	}
 
 	public abstract BigDecimal getValorPrimeiraParcelaCapitalOperacao();
@@ -101,7 +93,7 @@ public abstract class Calculadora {
 
 		for (EncargoTO encargoTO : encargosTO) {
 
-			EnumTipoDetalheParcela tipoDetalhe = encargoTO.getTipoDetalheParcela() == null ? EnumTipoDetalheParcela.OUTROS : encargoTO.getTipoDetalheParcela();
+			EnumTipoLancamento tipoDetalhe = encargoTO.getTipoDetalheParcela() == null ? EnumTipoLancamento.OUTROS : encargoTO.getTipoDetalheParcela();
 
 			DetalheParcelaTO detalheParcelaTO = new DetalheParcelaTO(tipoDetalhe);
 			detalheParcelaTO.setDescricao(encargoTO.getDescricaoEncargo());
@@ -121,7 +113,7 @@ public abstract class Calculadora {
 
 			calcularEncargos(parcelaTO.getEncargosTO(), parcelaTO.getDetalhesParcela(), saldoDevedor);
 
-			saldoDevedor = saldoDevedor.subtract(parcelaTO.getValor(EnumTipoDetalheParcela.PRINCIPAL), OpcoesCalculo.MathContextPadrao);
+			saldoDevedor = saldoDevedor.subtract(parcelaTO.getValor(EnumTipoLancamento.PRINCIPAL), OpcoesCalculo.MathContextPadrao);
 
 		}
 	}

@@ -2,16 +2,16 @@ package br.net.calculator.of.piety.to;
 
 import java.math.BigDecimal;
 
-import br.net.calculator.of.piety.pietyEnums.EnumTipoDetalheParcela;
+import br.net.calculator.of.piety.pietyEnums.EnumTipoLancamento;
 
 public class DetalheParcelaTO {
 
 	private BigDecimal valor;
 	private String descricao;
 	private DetalheParcelaTO detalheParcelaAnterior;
-	private EnumTipoDetalheParcela tipoDetalheParcela;
+	private EnumTipoLancamento tipoDetalheParcela;
 
-	public DetalheParcelaTO(EnumTipoDetalheParcela tipoDetalheParcela) {
+	public DetalheParcelaTO(EnumTipoLancamento tipoDetalheParcela) {
 		super();
 		this.detalheParcelaAnterior = null;
 		this.tipoDetalheParcela = tipoDetalheParcela;
@@ -28,11 +28,11 @@ public class DetalheParcelaTO {
 		return detalheParcelaAnterior;
 	}
 
-	public EnumTipoDetalheParcela getTipoDetalheParcela() {
+	public EnumTipoLancamento getTipoDetalheParcela() {
 		return tipoDetalheParcela;
 	}
 
-	public void setTipoDetalheParcela(EnumTipoDetalheParcela tipoDetalheParcela) {
+	public void setTipoDetalheParcela(EnumTipoLancamento tipoDetalheParcela) {
 		this.tipoDetalheParcela = tipoDetalheParcela;
 	}
 
