@@ -1,7 +1,8 @@
 package br.net.calculator.of.piety.pietyEnums;
 
+
 public enum EnumTipoLancamento {
-	PRINCIPAL(1, "Principal"), JUROS(2, "Juros"), OUTROS(3, "Outros");
+	PRINCIPAL(1, "Principal"), JUROS(2, "Juros"), INDEXADOR(3, "Indexador"), OUTROS(3, "Outros");
 	
 	private Integer codigo;
 	private String descricao;
