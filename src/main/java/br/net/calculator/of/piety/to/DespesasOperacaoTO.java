@@ -1,13 +1,7 @@
 package br.net.calculator.of.piety.to;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.UIDefaults.LazyInputMap;
-
-import br.net.calculator.of.piety.pietyEnums.EnumTipoDetalheParcela;
 
 public class DespesasOperacaoTO implements TO, ICalculoEncargos {
 

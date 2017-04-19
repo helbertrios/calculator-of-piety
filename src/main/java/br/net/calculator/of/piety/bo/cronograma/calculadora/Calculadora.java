@@ -28,7 +28,7 @@ public abstract class Calculadora {
 			return new CalculadoraSac(dataLiberacao, quantidadeParcela, valorOperacao, vencimentos, taxa);
 		}
 
-		throw new UnsupportedOperationException("Sistema de amortiza��o n�o suportado");
+		throw new UnsupportedOperationException("Sistema de amortização não suportado");
 	}
 
 	public static Calculadora getInstancia(final EnumSistemaAmortizacao sistemaAmortizacao, final OperacaoTO operacaoTO) {
@@ -41,7 +41,7 @@ public abstract class Calculadora {
 			return new CalculadoraSac(operacaoTO);
 		}
 
-		throw new UnsupportedOperationException("Sistema de amortiza��o n�o suportado");
+		throw new UnsupportedOperationException("Sistema de amortização não suportado");
 	}
 
 	public Calculadora(final EnumSistemaAmortizacao sistemaAmortizacao, final LocalDate dataLiberacao, final Integer quantidadeParcela, final BigDecimal valorOperacao, final List<LocalDate> vencimentos, final BigDecimal taxa) {
@@ -67,7 +67,7 @@ public abstract class Calculadora {
 
 		operacaoTO.setSistemaAmortizacao(sistemaAmortizacao);
 		if (operacaoTO.getParcelas().size() != operacaoTO.getQuantidadeParcela()) {
-			throw new IllegalArgumentException("As parcelas n�o foram geradas corretamente.");
+			throw new IllegalArgumentException("As parcelas não foram geradas corretamente.");
 		}
 
 		// calcularCapitalDeTodasParcelas();
@@ -97,6 +97,20 @@ public abstract class Calculadora {
 	 * } }
 	 */
 
+	public void calcularEncargosOperacao() {
+		BigDecimal saldoDevedor = operacaoTO.getValorOperacao();
+		calcularEncargos(operacaoTO.getDespesasOperacao().getEncargosTO(), operacaoTO.getDespesasOperacao().getDetalhesParcela(), saldoDevedor);
+	}
+	
+	public void calcularEncargosParcela() {
+		BigDecimal saldoDevedor = operacaoTO.getValorOperacao();
+		
+		for (ParcelaTO parcelaTO : operacaoTO.getParcelas()) {
+			calcularEncargos(parcelaTO.getEncargosTO(), parcelaTO.getDetalhesParcela(), saldoDevedor);
+			saldoDevedor = saldoDevedor.subtract(parcelaTO.getValor(EnumTipoDetalheParcela.PRINCIPAL), OpcoesCalculo.MathContextPadrao);
+		}
+	}
+	
 	private void calcularEncargos(List<EncargoTO> encargosTO, List<DetalheParcelaTO> detalhesParcelaTO, BigDecimal saldoDevedor) {
 
 		for (EncargoTO encargoTO : encargosTO) {
@@ -110,35 +124,16 @@ public abstract class Calculadora {
 			detalhesParcelaTO.add(detalheParcelaTO);
 
 			calcularEncargos(encargoTO.getEncargosTO(), detalhesParcelaTO, saldoDevedor.add(detalheParcelaTO.getValor()));
-
-		}
-
-	}
-
-	public void calcularEncargosParcela() {
-		BigDecimal saldoDevedor = operacaoTO.getValorOperacao();
-		for (ParcelaTO parcelaTO : operacaoTO.getParcelas()) {
-
-			calcularEncargos(parcelaTO.getEncargosTO(), parcelaTO.getDetalhesParcela(), saldoDevedor);
-
-			saldoDevedor = saldoDevedor.subtract(parcelaTO.getValor(EnumTipoDetalheParcela.PRINCIPAL), OpcoesCalculo.MathContextPadrao);
-
 		}
 	}
 
-	public void calcularEncargosOperacao() {
-		BigDecimal saldoDevedor = operacaoTO.getValorOperacao();
 
-		calcularEncargos(operacaoTO.getDespesasOperacao().getEncargosTO(), operacaoTO.getDespesasOperacao().getDetalhesParcela(), saldoDevedor);
-
-
-	}
 
 	private BigDecimal obterValorEncargo(EncargoTO encargoTO, BigDecimal baseCalculo) {
+		
 		if (encargoTO.getTipoValorEncargo().equals(EnumTipoValorEncargo.VALOR)) {
 			return encargoTO.getValorEncargo();
 		} else {
-
 			return baseCalculo.multiply(encargoTO.getTaxaEncargo(), OpcoesCalculo.MathContextPadrao);
 		}
 

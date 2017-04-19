@@ -8,24 +8,17 @@ public class DetalheParcelaTO {
 
 	private BigDecimal valor;
 	private String descricao;
-	private DetalheParcelaTO detalheParcelaAnterior;
 	private EnumTipoDetalheParcela tipoDetalheParcela;
 
 	public DetalheParcelaTO(EnumTipoDetalheParcela tipoDetalheParcela) {
 		super();
-		this.detalheParcelaAnterior = null;
 		this.tipoDetalheParcela = tipoDetalheParcela;
 
 	}
 
 	public DetalheParcelaTO(DetalheParcelaTO detalheParcelaAnterior) {
 		super();
-		this.detalheParcelaAnterior = detalheParcelaAnterior;
 		this.tipoDetalheParcela = detalheParcelaAnterior.getTipoDetalheParcela();
-	}
-
-	public DetalheParcelaTO getDetalheParcelaAnterior() {
-		return detalheParcelaAnterior;
 	}
 
 	public EnumTipoDetalheParcela getTipoDetalheParcela() {
@@ -61,9 +54,6 @@ public class DetalheParcelaTO {
 		retorno.append("......Tipo Detalhe ...........: " + getTipoDetalheParcela().getDescricao() + '\n');
 		retorno.append("......Valor ..................: " + getValor() + '\n');
 		retorno.append("......Descrição...............: " + getDescricao() + '\n');
-		if (getDetalheParcelaAnterior() != null) {
-			retorno.append("......Detalhe Anterior...............: " + getDetalheParcelaAnterior());
-		}
 		retorno.append("......==================================================" + '\n');
 		return retorno.toString();
 	}

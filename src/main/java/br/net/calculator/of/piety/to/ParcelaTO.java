@@ -5,8 +5,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.UIDefaults.LazyInputMap;
-
 import br.net.calculator.of.piety.pietyEnums.EnumTipoDetalheParcela;
 
 public class ParcelaTO implements TO, ICalculoEncargos {

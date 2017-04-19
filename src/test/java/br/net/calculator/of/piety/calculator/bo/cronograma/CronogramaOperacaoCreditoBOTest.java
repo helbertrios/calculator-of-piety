@@ -10,12 +10,10 @@ import org.junit.Test;
 
 import br.net.calculator.of.piety.bo.cronograma.CronogramaOperacaoCreditoBO;
 import br.net.calculator.of.piety.bo.data.CalcularDataVencimentoBO;
-import br.net.calculator.of.piety.bo.taxa.TaxaBO;
 import br.net.calculator.of.piety.pietyEnums.EnumMomentoCobrancaEncargo;
 import br.net.calculator.of.piety.pietyEnums.EnumSistemaAmortizacao;
 import br.net.calculator.of.piety.pietyEnums.EnumTipoDetalheParcela;
 import br.net.calculator.of.piety.pietyEnums.EnumTipoValorEncargo;
-import br.net.calculator.of.piety.to.DetalheParcelaTO;
 import br.net.calculator.of.piety.to.EncargoTO;
 import br.net.calculator.of.piety.to.OperacaoTO;
 import br.net.calculator.of.piety.to.ParcelaTO;
@@ -78,32 +76,34 @@ public class CronogramaOperacaoCreditoBOTest {
 	public void test() {
 		CalcularDataVencimentoBO calcularDataVencimentoBO =  new CalcularDataVencimentoBO();
 		CronogramaOperacaoCreditoBO cronogramaParcelasBO = new CronogramaOperacaoCreditoBO();
-		TaxaBO taxaBO = new TaxaBO();
-		
+			
 		
 		int quantidadeParcelas = 4;
 		LocalDate dataLiberacao = LocalDate.of(2017, Month.APRIL, 10);
 		BigDecimal valorOperacao = new BigDecimal("17500");
+		BigDecimal taxa = new BigDecimal("0.0179");
+		List<LocalDate> vencimentos = calcularDataVencimentoBO.obterCronogramaVencimentoMensalComInicioNoMesSeguinteALiberacao(quantidadeParcelas, dataLiberacao);
 
-		EncargoTO encargoTO1 = new EncargoTO(new BigDecimal("0.020"), EnumTipoValorEncargo.PERCENTUAL, EnumMomentoCobrancaEncargo.PARCELA, EnumTipoDetalheParcela.JUROS);
-		encargoTO1.setDescricaoEncargo("Taxa de Juros");
-		EncargoTO encargoTO11 = new EncargoTO(new BigDecimal("0.010"), EnumTipoValorEncargo.PERCENTUAL, EnumMomentoCobrancaEncargo.PARCELA, EnumTipoDetalheParcela.OUTROS);
-		encargoTO11.setDescricaoEncargo("TR");
-		encargoTO1.getEncargosTO().add(encargoTO11 );
+		EncargoTO juros = new EncargoTO(new BigDecimal("0.020"), EnumTipoValorEncargo.PERCENTUAL, EnumMomentoCobrancaEncargo.PARCELA, EnumTipoDetalheParcela.JUROS);
+		juros.setDescricaoEncargo("Taxa de Juros");
+		EncargoTO indexador = new EncargoTO(new BigDecimal("0.010"), EnumTipoValorEncargo.PERCENTUAL, EnumMomentoCobrancaEncargo.PARCELA, EnumTipoDetalheParcela.INDEXADOR);
+		indexador.setDescricaoEncargo("TR");
+		juros.getEncargosTO().add(indexador);
 
-		EncargoTO encargoTOOpercao = new EncargoTO(new BigDecimal("100.00"), EnumTipoValorEncargo.VALOR, EnumMomentoCobrancaEncargo.LIBERACAO, EnumTipoDetalheParcela.OUTROS);
+		EncargoTO despesaEmissaoTituloParaPagamento = new EncargoTO(new BigDecimal("10.00"), EnumTipoValorEncargo.VALOR, EnumMomentoCobrancaEncargo.LIBERACAO, EnumTipoDetalheParcela.OUTROS);
+	
+		EncargoTO taxaAdministacao = new EncargoTO(new BigDecimal("0.010"), EnumTipoValorEncargo.PERCENTUAL, EnumMomentoCobrancaEncargo.PARCELA, EnumTipoDetalheParcela.OUTROS);
+		taxaAdministacao.setDescricaoEncargo("Outro encargo");
 		
-		EncargoTO encargoTO2 = new EncargoTO(new BigDecimal("0.010"), EnumTipoValorEncargo.PERCENTUAL, EnumMomentoCobrancaEncargo.PARCELA, EnumTipoDetalheParcela.OUTROS);
-		encargoTO2.setDescricaoEncargo("Outro encargo");
 		
-		List<LocalDate> vencimentosParcelas = calcularDataVencimentoBO.obterCronogramaVencimentoMensalComInicioNoMesSeguinteALiberacao(quantidadeParcelas, dataLiberacao);
 		
-		OperacaoTO operacaoTO =  cronogramaParcelasBO.montarCronograma(dataLiberacao, quantidadeParcelas, valorOperacao, vencimentosParcelas, new BigDecimal("0.0179"), EnumSistemaAmortizacao.PRICE); 
-		operacaoTO.getDespesasOperacao().getEncargosTO().add(encargoTO1);
+		OperacaoTO operacaoTO =  cronogramaParcelasBO.montarCronograma(dataLiberacao, quantidadeParcelas, valorOperacao, vencimentos, taxa, EnumSistemaAmortizacao.PRICE); 
+		operacaoTO.getDespesasOperacao().getEncargosTO().add(juros);
+		
 		for (ParcelaTO parcelaTO : operacaoTO.getParcelas()) {
-			parcelaTO.getEncargosTO().add(encargoTO1);
-			parcelaTO.getEncargosTO().add(encargoTO2);
-			parcelaTO.getEncargosTO().add(encargoTOOpercao);
+			parcelaTO.getEncargosTO().add(juros);
+			parcelaTO.getEncargosTO().add(taxaAdministacao);
+			parcelaTO.getEncargosTO().add(despesaEmissaoTituloParaPagamento);
 			
 		}
 
